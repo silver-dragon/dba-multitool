@@ -62,7 +62,9 @@
 
 ### Application.Cities
 
-Cities that are part of any address (including geographic location)
+| Description |
+| --- |
+| Cities that are part of any address (including geographic location) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -81,6 +83,23 @@ Cities that are part of any address (including geographic location)
 | --- | --- | --- | --- | --- |
 | **PK_Application_Cities** | clustered | [CityID] |  |  |
 | FK_Application_Cities_StateProvinceID | nonclustered | [StateProvinceID] |  | Auto-created to support a foreign key |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[DetermineCustomerAccess]](#applicationdeterminecustomeraccess) | sql inline table valued function |
+| [[Application].[SystemParameters].[FK_Application_SystemParameters_DeliveryCityID_Application_Cities]](#applicationsystemparameters) | foreign key constraint |
+| [[Application].[SystemParameters].[FK_Application_SystemParameters_PostalCityID_Application_Cities]](#applicationsystemparameters) | foreign key constraint |
+| [[Integration].[GetCityUpdates]](#integrationgetcityupdates) | sql stored procedure |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_DeliveryCityID_Application_Cities]](#purchasingsuppliers) | foreign key constraint |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_PostalCityID_Application_Cities]](#purchasingsuppliers) | foreign key constraint |
+| [[Sales].[Customers].[FK_Sales_Customers_DeliveryCityID_Application_Cities]](#salescustomers) | foreign key constraint |
+| [[Sales].[Customers].[FK_Sales_Customers_PostalCityID_Application_Cities]](#salescustomers) | foreign key constraint |
+| [[Website].[Customers]](#websitecustomers) | view |
+| [[Website].[SearchForCustomers]](#websitesearchforcustomers) | sql stored procedure |
+| [[Website].[SearchForSuppliers]](#websitesearchforsuppliers) | sql stored procedure |
+| [[Website].[Suppliers]](#websitesuppliers) | view |
 
 [Back to top](#wideworldimporters)
 
@@ -103,11 +122,19 @@ Cities that are part of any address (including geographic location)
 | --- | --- | --- | --- | --- |
 | ix_Cities_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCityUpdates]](#integrationgetcityupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.Countries
 
-Countries that contain the states or provinces (including geographic boundaries)
+| Description |
+| --- |
+| Countries that contain the states or provinces (including geographic boundaries) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -133,6 +160,13 @@ Countries that contain the states or provinces (including geographic boundaries)
 | **PK_Application_Countries** | clustered | [CountryID] |  |  |
 | UQ_Application_Countries_FormalName | nonclustered | [FormalName] |  |  |
 | UQ_Application_Countries_CountryName | nonclustered | [CountryName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[StateProvinces].[FK_Application_StateProvinces_CountryID_Application_Countries]](#applicationstateprovinces) | foreign key constraint |
+| [[Integration].[GetCityUpdates]](#integrationgetcityupdates) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -161,11 +195,19 @@ Countries that contain the states or provinces (including geographic boundaries)
 | --- | --- | --- | --- | --- |
 | ix_Countries_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCityUpdates]](#integrationgetcityupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.DeliveryMethods
 
-Ways that stock items can be delivered (ie: truck/van, post, pickup, courier, etc.
+| Description |
+| --- |
+| Ways that stock items can be delivered (ie: truck/van, post, pickup, courier, etc. | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -181,6 +223,17 @@ Ways that stock items can be delivered (ie: truck/van, post, pickup, courier, et
 | --- | --- | --- | --- | --- |
 | **PK_Application_DeliveryMethods** | clustered | [DeliveryMethodID] |  |  |
 | UQ_Application_DeliveryMethods_DeliveryMethodName | nonclustered | [DeliveryMethodName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Purchasing].[PurchaseOrders].[FK_Purchasing_PurchaseOrders_DeliveryMethodID_Application_DeliveryMethods]](#purchasingpurchaseorders) | foreign key constraint |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_DeliveryMethodID_Application_DeliveryMethods]](#purchasingsuppliers) | foreign key constraint |
+| [[Sales].[Customers].[FK_Sales_Customers_DeliveryMethodID_Application_DeliveryMethods]](#salescustomers) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_DeliveryMethodID_Application_DeliveryMethods]](#salesinvoices) | foreign key constraint |
+| [[Website].[Customers]](#websitecustomers) | view |
+| [[Website].[Suppliers]](#websitesuppliers) | view |
 
 [Back to top](#wideworldimporters)
 
@@ -204,7 +257,9 @@ Ways that stock items can be delivered (ie: truck/van, post, pickup, courier, et
 
 ### Application.PaymentMethods
 
-Ways that payments can be made (ie: cash, check, EFT, etc.
+| Description |
+| --- |
+| Ways that payments can be made (ie: cash, check, EFT, etc. | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -220,6 +275,14 @@ Ways that payments can be made (ie: cash, check, EFT, etc.
 | --- | --- | --- | --- | --- |
 | **PK_Application_PaymentMethods** | clustered | [PaymentMethodID] |  |  |
 | UQ_Application_PaymentMethods_PaymentMethodName | nonclustered | [PaymentMethodName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetPaymentMethodUpdates]](#integrationgetpaymentmethodupdates) | sql stored procedure |
+| [[Purchasing].[SupplierTransactions].[FK_Purchasing_SupplierTransactions_PaymentMethodID_Application_PaymentMethods]](#purchasingsuppliertransactions) | foreign key constraint |
+| [[Sales].[CustomerTransactions].[FK_Sales_CustomerTransactions_PaymentMethodID_Application_PaymentMethods]](#salescustomertransactions) | foreign key constraint |
 
 [Back to top](#wideworldimporters)
 
@@ -239,11 +302,19 @@ Ways that payments can be made (ie: cash, check, EFT, etc.
 | --- | --- | --- | --- | --- |
 | ix_PaymentMethods_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetPaymentMethodUpdates]](#integrationgetpaymentmethodupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.People
 
-People known to the application (staff, customer contacts, supplier contacts)
+| Description |
+| --- |
+| People known to the application (staff, customer contacts, supplier contacts) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -279,6 +350,62 @@ People known to the application (staff, customer contacts, supplier contacts)
 | IX_Application_People_IsEmployee | nonclustered | [IsEmployee] |  | Allows quickly locating employees |
 | IX_Application_People_FullName | nonclustered | [FullName] |  | Improves performance of name-related queries |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[Cities].[FK_Application_Cities_Application_People]](#applicationcities) | foreign key constraint |
+| [[Application].[Countries].[FK_Application_Countries_Application_People]](#applicationcountries) | foreign key constraint |
+| [[Application].[DeliveryMethods].[FK_Application_DeliveryMethods_Application_People]](#applicationdeliverymethods) | foreign key constraint |
+| [[Application].[PaymentMethods].[FK_Application_PaymentMethods_Application_People]](#applicationpaymentmethods) | foreign key constraint |
+| [[Application].[People].[FK_Application_People_Application_People]](#applicationpeople) | foreign key constraint |
+| [[Application].[StateProvinces].[FK_Application_StateProvinces_Application_People]](#applicationstateprovinces) | foreign key constraint |
+| [[Application].[SystemParameters].[FK_Application_SystemParameters_Application_People]](#applicationsystemparameters) | foreign key constraint |
+| [[Application].[TransactionTypes].[FK_Application_TransactionTypes_Application_People]](#applicationtransactiontypes) | foreign key constraint |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+| [[Integration].[GetEmployeeUpdates]](#integrationgetemployeeupdates) | sql stored procedure |
+| [[Integration].[GetSupplierUpdates]](#integrationgetsupplierupdates) | sql stored procedure |
+| [[Purchasing].[PurchaseOrderLines].[FK_Purchasing_PurchaseOrderLines_Application_People]](#purchasingpurchaseorderlines) | foreign key constraint |
+| [[Purchasing].[PurchaseOrders].[FK_Purchasing_PurchaseOrders_Application_People]](#purchasingpurchaseorders) | foreign key constraint |
+| [[Purchasing].[PurchaseOrders].[FK_Purchasing_PurchaseOrders_ContactPersonID_Application_People]](#purchasingpurchaseorders) | foreign key constraint |
+| [[Purchasing].[SupplierCategories].[FK_Purchasing_SupplierCategories_Application_People]](#purchasingsuppliercategories) | foreign key constraint |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_AlternateContactPersonID_Application_People]](#purchasingsuppliers) | foreign key constraint |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_Application_People]](#purchasingsuppliers) | foreign key constraint |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_PrimaryContactPersonID_Application_People]](#purchasingsuppliers) | foreign key constraint |
+| [[Purchasing].[SupplierTransactions].[FK_Purchasing_SupplierTransactions_Application_People]](#purchasingsuppliertransactions) | foreign key constraint |
+| [[Sales].[BuyingGroups].[FK_Sales_BuyingGroups_Application_People]](#salesbuyinggroups) | foreign key constraint |
+| [[Sales].[CustomerCategories].[FK_Sales_CustomerCategories_Application_People]](#salescustomercategories) | foreign key constraint |
+| [[Sales].[Customers].[FK_Sales_Customers_AlternateContactPersonID_Application_People]](#salescustomers) | foreign key constraint |
+| [[Sales].[Customers].[FK_Sales_Customers_Application_People]](#salescustomers) | foreign key constraint |
+| [[Sales].[Customers].[FK_Sales_Customers_PrimaryContactPersonID_Application_People]](#salescustomers) | foreign key constraint |
+| [[Sales].[CustomerTransactions].[FK_Sales_CustomerTransactions_Application_People]](#salescustomertransactions) | foreign key constraint |
+| [[Sales].[InvoiceLines].[FK_Sales_InvoiceLines_Application_People]](#salesinvoicelines) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_AccountsPersonID_Application_People]](#salesinvoices) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_Application_People]](#salesinvoices) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_ContactPersonID_Application_People]](#salesinvoices) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_PackedByPersonID_Application_People]](#salesinvoices) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_SalespersonPersonID_Application_People]](#salesinvoices) | foreign key constraint |
+| [[Sales].[OrderLines].[FK_Sales_OrderLines_Application_People]](#salesorderlines) | foreign key constraint |
+| [[Sales].[Orders].[FK_Sales_Orders_Application_People]](#salesorders) | foreign key constraint |
+| [[Sales].[Orders].[FK_Sales_Orders_ContactPersonID_Application_People]](#salesorders) | foreign key constraint |
+| [[Sales].[Orders].[FK_Sales_Orders_PickedByPersonID_Application_People]](#salesorders) | foreign key constraint |
+| [[Sales].[Orders].[FK_Sales_Orders_SalespersonPersonID_Application_People]](#salesorders) | foreign key constraint |
+| [[Sales].[SpecialDeals].[FK_Sales_SpecialDeals_Application_People]](#salesspecialdeals) | foreign key constraint |
+| [[Warehouse].[Colors].[FK_Warehouse_Colors_Application_People]](#warehousecolors) | foreign key constraint |
+| [[Warehouse].[PackageTypes].[FK_Warehouse_PackageTypes_Application_People]](#warehousepackagetypes) | foreign key constraint |
+| [[Warehouse].[StockGroups].[FK_Warehouse_StockGroups_Application_People]](#warehousestockgroups) | foreign key constraint |
+| [[Warehouse].[StockItemHoldings].[FK_Warehouse_StockItemHoldings_Application_People]](#warehousestockitemholdings) | foreign key constraint |
+| [[Warehouse].[StockItems].[FK_Warehouse_StockItems_Application_People]](#warehousestockitems) | foreign key constraint |
+| [[Warehouse].[StockItemStockGroups].[FK_Warehouse_StockItemStockGroups_Application_People]](#warehousestockitemstockgroups) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_Application_People]](#warehousestockitemtransactions) | foreign key constraint |
+| [[Website].[ActivateWebsiteLogon]](#websiteactivatewebsitelogon) | sql stored procedure |
+| [[Website].[ChangePassword]](#websitechangepassword) | sql stored procedure |
+| [[Website].[Customers]](#websitecustomers) | view |
+| [[Website].[SearchForCustomers]](#websitesearchforcustomers) | sql stored procedure |
+| [[Website].[SearchForPeople]](#websitesearchforpeople) | sql stored procedure |
+| [[Website].[SearchForSuppliers]](#websitesearchforsuppliers) | sql stored procedure |
+| [[Website].[Suppliers]](#websitesuppliers) | view |
+
 [Back to top](#wideworldimporters)
 
 ### Application.People_Archive
@@ -313,11 +440,19 @@ People known to the application (staff, customer contacts, supplier contacts)
 | --- | --- | --- | --- | --- |
 | ix_People_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetEmployeeUpdates]](#integrationgetemployeeupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.StateProvinces
 
-States or provinces that contain cities (including geographic location)
+| Description |
+| --- |
+| States or provinces that contain cities (including geographic location) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -340,6 +475,14 @@ States or provinces that contain cities (including geographic location)
 | UQ_Application_StateProvinces_StateProvinceName | nonclustered | [StateProvinceName] |  |  |
 | IX_Application_StateProvinces_SalesTerritory | nonclustered | [SalesTerritory] |  | Index used to quickly locate sales territories |
 | FK_Application_StateProvinces_CountryID | nonclustered | [CountryID] |  | Auto-created to support a foreign key |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[Cities].[FK_Application_Cities_StateProvinceID_Application_StateProvinces]](#applicationcities) | foreign key constraint |
+| [[Application].[DetermineCustomerAccess]](#applicationdeterminecustomeraccess) | sql inline table valued function |
+| [[Integration].[GetCityUpdates]](#integrationgetcityupdates) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -364,11 +507,19 @@ States or provinces that contain cities (including geographic location)
 | --- | --- | --- | --- | --- |
 | ix_StateProvinces_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCityUpdates]](#integrationgetcityupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.SystemParameters
 
-Any configurable parameters for the whole system
+| Description |
+| --- |
+| Any configurable parameters for the whole system | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -398,7 +549,9 @@ Any configurable parameters for the whole system
 
 ### Application.TransactionTypes
 
-Types of customer, supplier, or stock transactions (ie: invoice, credit note, etc.)
+| Description |
+| --- |
+| Types of customer, supplier, or stock transactions (ie: invoice, credit note, etc.) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -414,6 +567,16 @@ Types of customer, supplier, or stock transactions (ie: invoice, credit note, et
 | --- | --- | --- | --- | --- |
 | **PK_Application_TransactionTypes** | clustered | [TransactionTypeID] |  |  |
 | UQ_Application_TransactionTypes_TransactionTypeName | nonclustered | [TransactionTypeName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetTransactionTypeUpdates]](#integrationgettransactiontypeupdates) | sql stored procedure |
+| [[Purchasing].[SupplierTransactions].[FK_Purchasing_SupplierTransactions_TransactionTypeID_Application_TransactionTypes]](#purchasingsuppliertransactions) | foreign key constraint |
+| [[Sales].[CustomerTransactions].[FK_Sales_CustomerTransactions_TransactionTypeID_Application_TransactionTypes]](#salescustomertransactions) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_TransactionTypeID_Application_TransactionTypes]](#warehousestockitemtransactions) | foreign key constraint |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -433,11 +596,19 @@ Types of customer, supplier, or stock transactions (ie: invoice, credit note, et
 | --- | --- | --- | --- | --- |
 | ix_TransactionTypes_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetTransactionTypeUpdates]](#integrationgettransactiontypeupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Purchasing.PurchaseOrderLines
 
-Detail lines from supplier purchase orders
+| Description |
+| --- |
+| Detail lines from supplier purchase orders | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -464,11 +635,19 @@ Detail lines from supplier purchase orders
 | FK_Purchasing_PurchaseOrderLines_PurchaseOrderID | nonclustered | [PurchaseOrderID] |  | Auto-created to support a foreign key |
 | FK_Purchasing_PurchaseOrderLines_PackageTypeID | nonclustered | [PackageTypeID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetPurchaseUpdates]](#integrationgetpurchaseupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Purchasing.PurchaseOrders
 
-Details of supplier purchase orders
+| Description |
+| --- |
+| Details of supplier purchase orders | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -494,11 +673,22 @@ Details of supplier purchase orders
 | FK_Purchasing_PurchaseOrders_DeliveryMethodID | nonclustered | [DeliveryMethodID] |  | Auto-created to support a foreign key |
 | FK_Purchasing_PurchaseOrders_ContactPersonID | nonclustered | [ContactPersonID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetPurchaseUpdates]](#integrationgetpurchaseupdates) | sql stored procedure |
+| [[Purchasing].[PurchaseOrderLines].[FK_Purchasing_PurchaseOrderLines_PurchaseOrderID_Purchasing_PurchaseOrders]](#purchasingpurchaseorderlines) | foreign key constraint |
+| [[Purchasing].[SupplierTransactions].[FK_Purchasing_SupplierTransactions_PurchaseOrderID_Purchasing_PurchaseOrders]](#purchasingsuppliertransactions) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_PurchaseOrderID_Purchasing_PurchaseOrders]](#warehousestockitemtransactions) | foreign key constraint |
+
 [Back to top](#wideworldimporters)
 
 ### Purchasing.SupplierCategories
 
-Categories for suppliers (ie novelties, toys, clothing, packaging, etc.)
+| Description |
+| --- |
+| Categories for suppliers (ie novelties, toys, clothing, packaging, etc.) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -514,6 +704,14 @@ Categories for suppliers (ie novelties, toys, clothing, packaging, etc.)
 | --- | --- | --- | --- | --- |
 | **PK_Purchasing_SupplierCategories** | clustered | [SupplierCategoryID] |  |  |
 | UQ_Purchasing_SupplierCategories_SupplierCategoryName | nonclustered | [SupplierCategoryName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetSupplierUpdates]](#integrationgetsupplierupdates) | sql stored procedure |
+| [[Purchasing].[Suppliers].[FK_Purchasing_Suppliers_SupplierCategoryID_Purchasing_SupplierCategories]](#purchasingsuppliers) | foreign key constraint |
+| [[Website].[Suppliers]](#websitesuppliers) | view |
 
 [Back to top](#wideworldimporters)
 
@@ -533,11 +731,19 @@ Categories for suppliers (ie novelties, toys, clothing, packaging, etc.)
 | --- | --- | --- | --- | --- |
 | ix_SupplierCategories_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetSupplierUpdates]](#integrationgetsupplierupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Purchasing.Suppliers
 
-Main entity table for suppliers (organizations)
+| Description |
+| --- |
+| Main entity table for suppliers (organizations) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -584,6 +790,19 @@ Main entity table for suppliers (organizations)
 | FK_Purchasing_Suppliers_DeliveryCityID | nonclustered | [DeliveryCityID] |  | Auto-created to support a foreign key |
 | FK_Purchasing_Suppliers_AlternateContactPersonID | nonclustered | [AlternateContactPersonID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetSupplierUpdates]](#integrationgetsupplierupdates) | sql stored procedure |
+| [[Purchasing].[PurchaseOrders].[FK_Purchasing_PurchaseOrders_SupplierID_Purchasing_Suppliers]](#purchasingpurchaseorders) | foreign key constraint |
+| [[Purchasing].[SupplierTransactions].[FK_Purchasing_SupplierTransactions_SupplierID_Purchasing_Suppliers]](#purchasingsuppliertransactions) | foreign key constraint |
+| [[Warehouse].[StockItems].[FK_Warehouse_StockItems_SupplierID_Purchasing_Suppliers]](#warehousestockitems) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_SupplierID_Purchasing_Suppliers]](#warehousestockitemtransactions) | foreign key constraint |
+| [[Website].[SearchForPeople]](#websitesearchforpeople) | sql stored procedure |
+| [[Website].[SearchForSuppliers]](#websitesearchforsuppliers) | sql stored procedure |
+| [[Website].[Suppliers]](#websitesuppliers) | view |
+
 [Back to top](#wideworldimporters)
 
 ### Purchasing.Suppliers_Archive
@@ -626,11 +845,19 @@ Main entity table for suppliers (organizations)
 | --- | --- | --- | --- | --- |
 | ix_Suppliers_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetSupplierUpdates]](#integrationgetsupplierupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Purchasing.SupplierTransactions
 
-All financial transactions that are supplier-related
+| Description |
+| --- |
+| All financial transactions that are supplier-related | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -662,11 +889,19 @@ All financial transactions that are supplier-related
 | FK_Purchasing_SupplierTransactions_PaymentMethodID | nonclustered | [PaymentMethodID], [TransactionDate] |  | Auto-created to support a foreign key |
 | CX_Purchasing_SupplierTransactions | clustered | [TransactionDate] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetTransactionUpdates]](#integrationgettransactionupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.BuyingGroups
 
-Customer organizations can be part of groups that exert greater buying power
+| Description |
+| --- |
+| Customer organizations can be part of groups that exert greater buying power | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -682,6 +917,15 @@ Customer organizations can be part of groups that exert greater buying power
 | --- | --- | --- | --- | --- |
 | **PK_Sales_BuyingGroups** | clustered | [BuyingGroupID] |  |  |
 | UQ_Sales_BuyingGroups_BuyingGroupName | nonclustered | [BuyingGroupName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+| [[Sales].[Customers].[FK_Sales_Customers_BuyingGroupID_Sales_BuyingGroups]](#salescustomers) | foreign key constraint |
+| [[Sales].[SpecialDeals].[FK_Sales_SpecialDeals_BuyingGroupID_Sales_BuyingGroups]](#salesspecialdeals) | foreign key constraint |
+| [[Website].[Customers]](#websitecustomers) | view |
 
 [Back to top](#wideworldimporters)
 
@@ -701,11 +945,19 @@ Customer organizations can be part of groups that exert greater buying power
 | --- | --- | --- | --- | --- |
 | ix_BuyingGroups_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.CustomerCategories
 
-Categories for customers (ie restaurants, cafes, supermarkets, etc.)
+| Description |
+| --- |
+| Categories for customers (ie restaurants, cafes, supermarkets, etc.) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -721,6 +973,15 @@ Categories for customers (ie restaurants, cafes, supermarkets, etc.)
 | --- | --- | --- | --- | --- |
 | **PK_Sales_CustomerCategories** | clustered | [CustomerCategoryID] |  |  |
 | UQ_Sales_CustomerCategories_CustomerCategoryName | nonclustered | [CustomerCategoryName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+| [[Sales].[Customers].[FK_Sales_Customers_CustomerCategoryID_Sales_CustomerCategories]](#salescustomers) | foreign key constraint |
+| [[Sales].[SpecialDeals].[FK_Sales_SpecialDeals_CustomerCategoryID_Sales_CustomerCategories]](#salesspecialdeals) | foreign key constraint |
+| [[Website].[Customers]](#websitecustomers) | view |
 
 [Back to top](#wideworldimporters)
 
@@ -740,11 +1001,19 @@ Categories for customers (ie restaurants, cafes, supermarkets, etc.)
 | --- | --- | --- | --- | --- |
 | ix_CustomerCategories_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.Customers
 
-Main entity tables for customers (organizations or individuals)
+| Description |
+| --- |
+| Main entity tables for customers (organizations or individuals) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -795,6 +1064,27 @@ Main entity tables for customers (organizations or individuals)
 | FK_Sales_Customers_BuyingGroupID | nonclustered | [BuyingGroupID] |  | Auto-created to support a foreign key |
 | FK_Sales_Customers_AlternateContactPersonID | nonclustered | [AlternateContactPersonID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[FilterCustomersBySalesTerritoryRole]](#applicationfiltercustomersbysalesterritoryrole) | security policy |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+| [[Integration].[GetOrderUpdates]](#integrationgetorderupdates) | sql stored procedure |
+| [[Integration].[GetSaleUpdates]](#integrationgetsaleupdates) | sql stored procedure |
+| [[Sales].[Customers].[FK_Sales_Customers_BillToCustomerID_Sales_Customers]](#salescustomers) | foreign key constraint |
+| [[Sales].[CustomerTransactions].[FK_Sales_CustomerTransactions_CustomerID_Sales_Customers]](#salescustomertransactions) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_BillToCustomerID_Sales_Customers]](#salesinvoices) | foreign key constraint |
+| [[Sales].[Invoices].[FK_Sales_Invoices_CustomerID_Sales_Customers]](#salesinvoices) | foreign key constraint |
+| [[Sales].[Orders].[FK_Sales_Orders_CustomerID_Sales_Customers]](#salesorders) | foreign key constraint |
+| [[Sales].[SpecialDeals].[FK_Sales_SpecialDeals_CustomerID_Sales_Customers]](#salesspecialdeals) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_CustomerID_Sales_Customers]](#warehousestockitemtransactions) | foreign key constraint |
+| [[Website].[CalculateCustomerPrice]](#websitecalculatecustomerprice) | sql scalar function |
+| [[Website].[Customers]](#websitecustomers) | view |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+| [[Website].[SearchForCustomers]](#websitesearchforcustomers) | sql stored procedure |
+| [[Website].[SearchForPeople]](#websitesearchforpeople) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.Customers_Archive
@@ -839,11 +1129,19 @@ Main entity tables for customers (organizations or individuals)
 | --- | --- | --- | --- | --- |
 | ix_Customers_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetCustomerUpdates]](#integrationgetcustomerupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.CustomerTransactions
 
-All financial transactions that are customer-related
+| Description |
+| --- |
+| All financial transactions that are customer-related | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -874,11 +1172,20 @@ All financial transactions that are customer-related
 | FK_Sales_CustomerTransactions_CustomerID | nonclustered | [CustomerID], [TransactionDate] |  | Auto-created to support a foreign key |
 | CX_Sales_CustomerTransactions | clustered | [TransactionDate] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetTransactionUpdates]](#integrationgettransactionupdates) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.InvoiceLines
 
-Detail lines from customer invoices
+| Description |
+| --- |
+| Detail lines from customer invoices | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -906,11 +1213,20 @@ Detail lines from customer invoices
 | FK_Sales_InvoiceLines_PackageTypeID | nonclustered | [PackageTypeID] |  | Auto-created to support a foreign key |
 | FK_Sales_InvoiceLines_InvoiceID | nonclustered | [InvoiceID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetSaleUpdates]](#integrationgetsaleupdates) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.Invoices
 
-Details of customer invoices
+| Description |
+| --- |
+| Details of customer invoices | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -969,11 +1285,25 @@ Details of customer invoices
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetSaleUpdates]](#integrationgetsaleupdates) | sql stored procedure |
+| [[Integration].[GetTransactionUpdates]](#integrationgettransactionupdates) | sql stored procedure |
+| [[Sales].[CK_Sales_Invoices_ReturnedDeliveryData_Must_Be_Valid_JSON]](#salesck_sales_invoices_returneddeliverydata_must_be_valid_json) | check constraint |
+| [[Sales].[CustomerTransactions].[FK_Sales_CustomerTransactions_InvoiceID_Sales_Invoices]](#salescustomertransactions) | foreign key constraint |
+| [[Sales].[InvoiceLines].[FK_Sales_InvoiceLines_InvoiceID_Sales_Invoices]](#salesinvoicelines) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_InvoiceID_Sales_Invoices]](#warehousestockitemtransactions) | foreign key constraint |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.OrderLines
 
-Detail lines from customer orders
+| Description |
+| --- |
+| Detail lines from customer orders | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1002,11 +1332,21 @@ Detail lines from customer orders
 | FK_Sales_OrderLines_PackageTypeID | nonclustered | [PackageTypeID] |  | Auto-created to support a foreign key |
 | FK_Sales_OrderLines_OrderID | nonclustered | [OrderID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetOrderUpdates]](#integrationgetorderupdates) | sql stored procedure |
+| [[Website].[InsertCustomerOrders]](#websiteinsertcustomerorders) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.Orders
 
-Detail of customer orders
+| Description |
+| --- |
+| Detail of customer orders | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1037,11 +1377,25 @@ Detail of customer orders
 | FK_Sales_Orders_CustomerID | nonclustered | [CustomerID] |  | Auto-created to support a foreign key |
 | FK_Sales_Orders_ContactPersonID | nonclustered | [ContactPersonID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[PopulateDataToCurrentDate]](#dataloadsimulationpopulatedatatocurrentdate) | sql stored procedure |
+| [[Integration].[GetOrderUpdates]](#integrationgetorderupdates) | sql stored procedure |
+| [[Sales].[Invoices].[FK_Sales_Invoices_OrderID_Sales_Orders]](#salesinvoices) | foreign key constraint |
+| [[Sales].[OrderLines].[FK_Sales_OrderLines_OrderID_Sales_Orders]](#salesorderlines) | foreign key constraint |
+| [[Sales].[Orders].[FK_Sales_Orders_BackorderOrderID_Sales_Orders]](#salesorders) | foreign key constraint |
+| [[Website].[InsertCustomerOrders]](#websiteinsertcustomerorders) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Sales.SpecialDeals
 
-Special pricing (can include fixed prices, discount $ or discount %)
+| Description |
+| --- |
+| Special pricing (can include fixed prices, discount $ or discount %) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1097,6 +1451,14 @@ Special pricing (can include fixed prices, discount $ or discount %)
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Sales].[CK_Sales_SpecialDeals_Exactly_One_NOT_NULL_Pricing_Option_Is_Required]](#salesck_sales_specialdeals_exactly_one_not_null_pricing_option_is_required) | check constraint |
+| [[Sales].[CK_Sales_SpecialDeals_Unit_Price_Deal_Requires_Special_StockItem]](#salesck_sales_specialdeals_unit_price_deal_requires_special_stockitem) | check constraint |
+| [[Website].[CalculateCustomerPrice]](#websitecalculatecustomerprice) | sql scalar function |
+
 [Back to top](#wideworldimporters)
 
 ### Warehouse.ColdRoomTemperatures
@@ -1116,6 +1478,12 @@ Special pricing (can include fixed prices, discount $ or discount %)
 | --- | --- | --- | --- | --- |
 | **PK_Warehouse_ColdRoomTemperatures** | nonclustered | [ColdRoomTemperatureID] |  |  |
 | IX_Warehouse_ColdRoomTemperatures_ColdRoomSensorNumber | nonclustered | [ColdRoomSensorNumber] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[RecordColdRoomTemperatures]](#websiterecordcoldroomtemperatures) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -1140,7 +1508,9 @@ Special pricing (can include fixed prices, discount $ or discount %)
 
 ### Warehouse.Colors
 
-Stock items can (optionally) have colors
+| Description |
+| --- |
+| Stock items can (optionally) have colors | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1156,6 +1526,13 @@ Stock items can (optionally) have colors
 | --- | --- | --- | --- | --- |
 | **PK_Warehouse_Colors** | clustered | [ColorID] |  |  |
 | UQ_Warehouse_Colors_ColorName | nonclustered | [ColorName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetStockItemUpdates]](#integrationgetstockitemupdates) | sql stored procedure |
+| [[Warehouse].[StockItems].[FK_Warehouse_StockItems_ColorID_Warehouse_Colors]](#warehousestockitems) | foreign key constraint |
 
 [Back to top](#wideworldimporters)
 
@@ -1179,7 +1556,9 @@ Stock items can (optionally) have colors
 
 ### Warehouse.PackageTypes
 
-Ways that stock items can be packaged (ie: each, box, carton, pallet, kg, etc.
+| Description |
+| --- |
+| Ways that stock items can be packaged (ie: each, box, carton, pallet, kg, etc. | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1195,6 +1574,20 @@ Ways that stock items can be packaged (ie: each, box, carton, pallet, kg, etc.
 | --- | --- | --- | --- | --- |
 | **PK_Warehouse_PackageTypes** | clustered | [PackageTypeID] |  |  |
 | UQ_Warehouse_PackageTypes_PackageTypeName | nonclustered | [PackageTypeName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetOrderUpdates]](#integrationgetorderupdates) | sql stored procedure |
+| [[Integration].[GetPurchaseUpdates]](#integrationgetpurchaseupdates) | sql stored procedure |
+| [[Integration].[GetSaleUpdates]](#integrationgetsaleupdates) | sql stored procedure |
+| [[Integration].[GetStockItemUpdates]](#integrationgetstockitemupdates) | sql stored procedure |
+| [[Purchasing].[PurchaseOrderLines].[FK_Purchasing_PurchaseOrderLines_PackageTypeID_Warehouse_PackageTypes]](#purchasingpurchaseorderlines) | foreign key constraint |
+| [[Sales].[InvoiceLines].[FK_Sales_InvoiceLines_PackageTypeID_Warehouse_PackageTypes]](#salesinvoicelines) | foreign key constraint |
+| [[Sales].[OrderLines].[FK_Sales_OrderLines_PackageTypeID_Warehouse_PackageTypes]](#salesorderlines) | foreign key constraint |
+| [[Warehouse].[StockItems].[FK_Warehouse_StockItems_OuterPackageID_Warehouse_PackageTypes]](#warehousestockitems) | foreign key constraint |
+| [[Warehouse].[StockItems].[FK_Warehouse_StockItems_UnitPackageID_Warehouse_PackageTypes]](#warehousestockitems) | foreign key constraint |
 
 [Back to top](#wideworldimporters)
 
@@ -1218,7 +1611,9 @@ Ways that stock items can be packaged (ie: each, box, carton, pallet, kg, etc.
 
 ### Warehouse.StockGroups
 
-Groups for categorizing stock items (ie: novelties, toys, edible novelties, etc.)
+| Description |
+| --- |
+| Groups for categorizing stock items (ie: novelties, toys, edible novelties, etc.) | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1234,6 +1629,13 @@ Groups for categorizing stock items (ie: novelties, toys, edible novelties, etc.
 | --- | --- | --- | --- | --- |
 | **PK_Warehouse_StockGroups** | clustered | [StockGroupID] |  |  |
 | UQ_Warehouse_StockGroups_StockGroupName | nonclustered | [StockGroupName] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Sales].[SpecialDeals].[FK_Sales_SpecialDeals_StockGroupID_Warehouse_StockGroups]](#salesspecialdeals) | foreign key constraint |
+| [[Warehouse].[StockItemStockGroups].[FK_Warehouse_StockItemStockGroups_StockGroupID_Warehouse_StockGroups]](#warehousestockitemstockgroups) | foreign key constraint |
 
 [Back to top](#wideworldimporters)
 
@@ -1257,7 +1659,9 @@ Groups for categorizing stock items (ie: novelties, toys, edible novelties, etc.
 
 ### Warehouse.StockItemHoldings
 
-Non-temporal attributes for stock items
+| Description |
+| --- |
+| Non-temporal attributes for stock items | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1277,11 +1681,20 @@ Non-temporal attributes for stock items
 | --- | --- | --- | --- | --- |
 | **PK_Warehouse_StockItemHoldings** | clustered | [StockItemID] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetStockHoldingUpdates]](#integrationgetstockholdingupdates) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Warehouse.StockItems
 
-Main entity table for stock items
+| Description |
+| --- |
+| Main entity table for stock items | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1322,6 +1735,26 @@ Main entity table for stock items
 | FK_Warehouse_StockItems_OuterPackageID | nonclustered | [OuterPackageID] |  | Auto-created to support a foreign key |
 | FK_Warehouse_StockItems_ColorID | nonclustered | [ColorID] |  | Auto-created to support a foreign key |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetPurchaseUpdates]](#integrationgetpurchaseupdates) | sql stored procedure |
+| [[Integration].[GetSaleUpdates]](#integrationgetsaleupdates) | sql stored procedure |
+| [[Integration].[GetStockItemUpdates]](#integrationgetstockitemupdates) | sql stored procedure |
+| [[Purchasing].[PurchaseOrderLines].[FK_Purchasing_PurchaseOrderLines_StockItemID_Warehouse_StockItems]](#purchasingpurchaseorderlines) | foreign key constraint |
+| [[Sales].[InvoiceLines].[FK_Sales_InvoiceLines_StockItemID_Warehouse_StockItems]](#salesinvoicelines) | foreign key constraint |
+| [[Sales].[OrderLines].[FK_Sales_OrderLines_StockItemID_Warehouse_StockItems]](#salesorderlines) | foreign key constraint |
+| [[Sales].[SpecialDeals].[FK_Sales_SpecialDeals_StockItemID_Warehouse_StockItems]](#salesspecialdeals) | foreign key constraint |
+| [[Warehouse].[StockItemHoldings].[PKFK_Warehouse_StockItemHoldings_StockItemID_Warehouse_StockItems]](#warehousestockitemholdings) | foreign key constraint |
+| [[Warehouse].[StockItemStockGroups].[FK_Warehouse_StockItemStockGroups_StockItemID_Warehouse_StockItems]](#warehousestockitemstockgroups) | foreign key constraint |
+| [[Warehouse].[StockItemTransactions].[FK_Warehouse_StockItemTransactions_StockItemID_Warehouse_StockItems]](#warehousestockitemtransactions) | foreign key constraint |
+| [[Website].[CalculateCustomerPrice]](#websitecalculatecustomerprice) | sql scalar function |
+| [[Website].[InsertCustomerOrders]](#websiteinsertcustomerorders) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+| [[Website].[SearchForStockItems]](#websitesearchforstockitems) | sql stored procedure |
+| [[Website].[SearchForStockItemsByTags]](#websitesearchforstockitemsbytags) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Warehouse.StockItems_Archive
@@ -1360,11 +1793,19 @@ Main entity table for stock items
 | --- | --- | --- | --- | --- |
 | ix_StockItems_Archive | clustered | [ValidFrom], [ValidTo] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetStockItemUpdates]](#integrationgetstockitemupdates) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Warehouse.StockItemStockGroups
 
-Which stock items are in which stock groups
+| Description |
+| --- |
+| Which stock items are in which stock groups | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1382,11 +1823,19 @@ Which stock items are in which stock groups
 | UQ_StockItemStockGroups_StockItemID_Lookup | nonclustered | [StockItemID], [StockGroupID] |  |  |
 | UQ_StockItemStockGroups_StockGroupID_Lookup | nonclustered | [StockGroupID], [StockItemID] |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[CalculateCustomerPrice]](#websitecalculatecustomerprice) | sql scalar function |
+
 [Back to top](#wideworldimporters)
 
 ### Warehouse.StockItemTransactions
 
-Transactions covering all movements of all stock items
+| Description |
+| --- |
+| Transactions covering all movements of all stock items | 
 
 | Column | Type | Null | Foreign Key | Default | Description |
 | --- | --- | --- | --- | --- | --- |
@@ -1415,6 +1864,13 @@ Transactions covering all movements of all stock items
 | FK_Warehouse_StockItemTransactions_CustomerID | nonclustered | [CustomerID] |  | Auto-created to support a foreign key |
 | CCX_Warehouse_StockItemTransactions | clustered columnstore |  | [StockItemTransactionID], [StockItemID], [TransactionTypeID], [CustomerID], [InvoiceID], [SupplierID], [PurchaseOrderID], [TransactionOccurredWhen], [Quantity], [LastEditedBy], [LastEditedWhen] |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Integration].[GetMovementUpdates]](#integrationgetmovementupdates) | sql stored procedure |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Warehouse.VehicleTemperatures
@@ -1435,6 +1891,13 @@ Transactions covering all movements of all stock items
 | Name | Type | Key Columns | Include Columns | Description |
 | --- | --- | --- | --- | --- |
 | **PK_Warehouse_VehicleTemperatures** | nonclustered | [VehicleTemperatureID] |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[RecordVehicleTemperature]](#websiterecordvehicletemperature) | sql stored procedure |
+| [[Website].[VehicleTemperatures]](#websitevehicletemperatures) | view |
 
 [Back to top](#wideworldimporters)
 
@@ -1900,6 +2363,12 @@ END;
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[Configuration_ConfigureForEnterpriseEdition]](#applicationconfiguration_configureforenterpriseedition) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.Configuration_ApplyFullTextIndexing
@@ -2103,6 +2572,12 @@ END;
 ```
 
 </details>
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[Configuration_ConfigureForEnterpriseEdition]](#applicationconfiguration_configureforenterpriseedition) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -2345,6 +2820,12 @@ END;
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[Configuration_ConfigureForEnterpriseEdition]](#applicationconfiguration_configureforenterpriseedition) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.Configuration_ApplyRowLevelSecurity
@@ -2413,6 +2894,12 @@ END;
 ```
 
 </details>
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[ReactivateTemporalTablesAfterDataLoad]](#dataloadsimulationreactivatetemporaltablesafterdataload) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -2679,6 +3166,12 @@ BEGIN
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[Configuration_ConfigureForEnterpriseEdition]](#applicationconfiguration_configureforenterpriseedition) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Application.Configuration_RemoveAuditing
@@ -2782,6 +3275,12 @@ END;
 ```
 
 </details>
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[DeactivateTemporalTablesBeforeDataLoad]](#dataloadsimulationdeactivatetemporaltablesbeforedataload) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -3101,6 +3600,12 @@ BEGIN
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[PopulateDataToCurrentDate]](#dataloadsimulationpopulatedatatocurrentdate) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### DataLoadSimulation.Configuration_RemoveDataLoadSimulationProcedures
@@ -3143,6 +3648,12 @@ END;
 ```
 
 </details>
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[PopulateDataToCurrentDate]](#dataloadsimulationpopulatedatatocurrentdate) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -3297,6 +3808,12 @@ AS BEGIN
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[Configuration_ApplyDataLoadSimulationProcedures]](#dataloadsimulationconfiguration_applydataloadsimulationprocedures) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### DataLoadSimulation.PopulateDataToCurrentDate
@@ -3441,6 +3958,12 @@ END;
 ```
 
 </details>
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[DataLoadSimulation].[Configuration_ApplyDataLoadSimulationProcedures]](#dataloadsimulationconfiguration_applydataloadsimulationprocedures) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -4882,6 +5405,12 @@ END;
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Sequences].[ReseedAllSequences]](#sequencesreseedallsequences) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Website.ActivateWebsiteLogon
@@ -5695,6 +6224,12 @@ END;
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[InsertCustomerOrders]](#websiteinsertcustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 </details>
@@ -5739,6 +6274,12 @@ RETURN (SELECT 1 AS AccessResult
 
 </details>
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Application].[FilterCustomersBySalesTerritoryRole]](#applicationfiltercustomersbysalesterritoryrole) | security policy |
+
 [Back to top](#wideworldimporters)
 
 </details>
@@ -5758,6 +6299,12 @@ RETURN (SELECT 1 AS AccessResult
 | --- | ---| --- | --- | --- |
 | **OrderID** | INT | no |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[InvoiceCustomerOrders]](#websiteinvoicecustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Website.OrderLineList
@@ -5768,6 +6315,12 @@ RETURN (SELECT 1 AS AccessResult
 | StockItemID | INT | yes |  |  |
 | Description | NVARCHAR(100) | yes |  |  |
 | Quantity | INT | yes |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[InsertCustomerOrders]](#websiteinsertcustomerorders) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 
@@ -5784,6 +6337,12 @@ RETURN (SELECT 1 AS AccessResult
 | Comments | NVARCHAR(MAX) | yes |  |  |
 | DeliveryInstructions | NVARCHAR(MAX) | yes |  |  |
 
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[InsertCustomerOrders]](#websiteinsertcustomerorders) | sql stored procedure |
+
 [Back to top](#wideworldimporters)
 
 ### Website.SensorDataList
@@ -5794,6 +6353,12 @@ RETURN (SELECT 1 AS AccessResult
 | ColdRoomSensorNumber | INT | yes |  |  |
 | RecordedWhen | DATETIME2(7) | yes |  |  |
 | Temperature | DECIMAL(18,2) | yes |  |  |
+
+#### Referenced By
+
+| Object | Type |
+| --- | --- |
+| [[Website].[RecordColdRoomTemperatures]](#websiterecordcoldroomtemperatures) | sql stored procedure |
 
 [Back to top](#wideworldimporters)
 

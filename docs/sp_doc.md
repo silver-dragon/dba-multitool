@@ -4,6 +4,7 @@
 * [Arguments](#arguments)
 * [Usage](#usage)
 * [Output](#output)
+* [Known Issues](#known-issues)
 * [Contributing](#contributing)
 * [More](#more)
 
@@ -86,6 +87,8 @@ Invoke-DbaQuery -SqlInstance localhost -Database master -Query $Query -As Single
 
 ### Advanced Use
 
+#### Stored Procedure Parameters
+
 Add extended properties to programmable objects, using parameter names as keys,
 to include their descriptions in the documentation:
 
@@ -97,11 +100,36 @@ EXEC sys.sp_addextendedproperty @name=N'@ExtendedPropertyName',
     @level1name=N'sp_doc'
 ```
 
+#### Embedded Markdown
+
+Extended properties containing embedded markdown are supported. The following characters
+are replaced to render markdown as plain text to avoid issues with formatting:
+
+| Character | Replacement | Description |
+| --------- | ----------- | ----------- |
+| `\|` | `&#124;` | HTML code for pipe |
+| ``` ` ``` | `&#96;` | HTML code for tick |
+| `Newline` | `<br/>` | HTML tag for line break |
+
 ## Output
 
 Sample output for the [WideWorldImporters database][sample].
 
 *Note: Slight changes may be made to this database to better demo script capabilities.*
+
+## Known Issues
+
+### Missing Line Breaks
+
+When executing in SSMS, even with ['Retain CR/LF on copy or save'][so]
+setting enabled, line breaks may incorrectly
+not appear in the results.
+A [UserVoice bug][UVBug] exists for this bug - please :arrow_up: vote if you
+agree it should be addressed.
+
+This should not affect the markdown rendering, but it is
+recommended to use another application for execution
+until this is fixed.
 
 ## Contributing
 
@@ -114,3 +142,5 @@ Check out the other scripts in the [DBA MultiTool][tool].
 [tool]: https://dba-multitool.org
 [issue]: https://github.com/LowlyDBA/dba-multitool/issues
 [sample]: assets/WideWorldImporters.md
+[so]: https://stackoverflow.com/a/37284582/4406684
+[UVBug]: https://feedback.azure.com/forums/908035-sql-server/suggestions/32899324-ssms-ignores-final-r-n-crlf-carriage-return
